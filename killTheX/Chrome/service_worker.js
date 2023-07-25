@@ -1,19 +1,33 @@
 chrome.webNavigation.onCompleted.addListener((details) => {
-    console.log('fetch');
-    if (details.url.indexOf('chrome://' < 0)) {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            // Use the Scripting API to execute a script
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                func: setFavicon
-            });
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                func: findXs
-            });
-        });	
-    }
+     runScripts();
 });
+
+chrome.webNavigation.onDOMContentLoaded.addListener((details) => {
+    runScripts();
+});
+
+chrome.webRequest.onCompleted.addListener(() => {
+    runScripts();
+},{
+    urls: [ "https://twitter.com/*",
+    "https://www.twitter.com/*",
+    "https://x.com/*",
+    "https://www.x.com/*"]
+})
+
+function runScripts() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        // Use the Scripting API to execute a script
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            func: setFavicon
+        });
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            func: findXs
+        });
+    });	
+}
 
 function setFavicon() {
     let url = chrome.runtime.getURL("images/icon.png");
