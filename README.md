@@ -7,8 +7,10 @@ Elon is dumb.  This attempts to revert as many of the "X" changes that Elon is t
 ## Chrome Installation
 
 1. Navigate to `chrome://extensions`
-2. Drag .crx file into the browser window
-3. Enjoy!
+2. Ensure developer mode is enabled
+4. Select "Load unpacked"
+5. Select the unzipped release
+6. Enjoy!
 
 ## FF Installation
 1. Navigate to `about:addons`
